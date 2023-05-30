@@ -1,5 +1,30 @@
+use wasmer::*;
+
 fn main() {
-    println!("{}", load_module_files().len());
+    for (name, bytes) in load_module_files() {
+        run_module(&name, &bytes);
+    }
+}
+
+fn run_module(name: &str, bytes: &[u8]) {
+    let mut store = Store::default();
+
+    let module = Module::new(&store, bytes).expect("should create module");
+
+    let instance =
+        Instance::new(&mut store, &module, &imports! {}).expect("should create instance");
+
+    let rate_number = instance
+        .exports
+        .get_typed_function::<i32, i32>(&store, "rate_number")
+        .expect("should get rate_number exported function");
+
+    for number in [5, 8, -12, 16, 1023] {
+        let rating = rate_number
+            .call(&mut store, number)
+            .expect("should call rate_number");
+        println!("Module {} rates number {} as {}/10", name, number, rating);
+    }
 }
 
 fn load_module_files() -> Vec<(String, Vec<u8>)> {

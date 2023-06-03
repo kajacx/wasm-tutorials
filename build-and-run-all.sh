@@ -10,4 +10,7 @@ cp plugin-rust/target/wasm32-unknown-unknown/debug/plugin_rust.wasm plugins/plug
 echo "Runntig Rust wasmer host" && \
 cd runtime-rust-wasmer && cargo run && cd .. && \
 \
+echo "Runntig Rust wasmtime host" && \
+cd runtime-rust-wasmtime && cargo run && cd .. && \
+\
 echo "All done"

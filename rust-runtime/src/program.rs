@@ -12,7 +12,15 @@ pub async fn get_text() -> String {
         .await
         .expect("should create module");
 
-    let instance = new_instance_async(&mut store, &module, &[]).await.expect("should create instance");
+    let mut linker = Linker::new(store.engine());
+
+    linker
+        .func_wrap("imported_fns", "add_one", |_: Caller<()>, num: i32| num + 1)
+        .expect("should add import function");
+
+    let instance = instantiate_async(&mut store, &linker, &module)
+        .await
+        .expect("should create instance");
 
     let rate_number = instance
         .get_typed_func::<i32, i32>(&mut store, "add_three")

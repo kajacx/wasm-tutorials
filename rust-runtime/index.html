@@ -9,7 +9,8 @@
     <script type="module">
       import init, { get_text_js } from "./pkg/rust_runtime_lib.js";
       init().then(
-        () => (document.getElementById("output").innerText = get_text_js())
+        async () =>
+          (document.getElementById("output").innerText = await get_text_js())
       );
     </script>
     <div id="output">Output will appear here</div>

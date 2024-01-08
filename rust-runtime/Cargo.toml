@@ -15,3 +15,5 @@ path = "src/main.rs"
 [dependencies]
 wasm-bridge = { version = "0.3.0" }
 wasm-bindgen = { version = "0.2.89" }
+wasm-bindgen-futures = { version = "0.4.39" }
+tokio = { version = "1.35", features = ["rt", "macros"] }

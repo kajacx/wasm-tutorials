@@ -5,12 +5,14 @@ use wasm_bridge::*;
 static GUEST_BYTES: &[u8] =
     include_bytes!("../../rust-guest/target/wasm32-unknown-unknown/release/rust_guest.wasm");
 
-pub fn get_text() -> String {
+pub async fn get_text() -> String {
     let mut store = Store::<()>::default();
 
-    let module = Module::new(&store.engine(), GUEST_BYTES).expect("should create module");
+    let module = new_module_async(&store.engine(), GUEST_BYTES)
+        .await
+        .expect("should create module");
 
-    let instance = Instance::new(&mut store, &module, &[]).expect("should create instance");
+    let instance = new_instance_async(&mut store, &module, &[]).await.expect("should create instance");
 
     let rate_number = instance
         .get_typed_func::<i32, i32>(&mut store, "add_three")

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Wasm bridge tutorial - WASM modules</title>
+    <base href="." />
+  </head>
+  <body>
+    <script type="module">
+      import init, { get_text_js } from "./pkg/rust_runtime_lib.js";
+      init().then(
+        () => (document.getElementById("output").innerText = get_text_js())
+      );
+    </script>
+    <div id="output">Output will appear here</div>
+  </body>
+</html>

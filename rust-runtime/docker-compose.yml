@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  wbtutor_wasm_modules:
+    image: nginx:latest
+    container_name: wbtutor-wasm-modules
+    ports:
+      - "8100:80"
+    volumes:
+      - .:/usr/share/nginx/html
+    networks: []
+    restart: unless-stopped
+
+networks: {}

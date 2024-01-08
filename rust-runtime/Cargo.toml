@@ -13,4 +13,5 @@ name = "rust-runtime-sys"
 path = "src/main.rs"
 
 [dependencies]
+wasm-bridge = { version = "0.3.0" }
 wasm-bindgen = { version = "0.2.89" }
